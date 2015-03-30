@@ -16,6 +16,10 @@ angular
         eventDeleteClick: '&calendarDeleteEventClick',
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
+        drillDown: '=calendarDrillDown',
+        drillDownTo: "=calendarDrillDownTo",
+        monthEndDate: "=calendarMonthEndDate",
+        monthStartDate: "=calendarMonthStartDate",
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek',
         eventLabel: '@calendarEventLabel',
@@ -68,6 +72,16 @@ angular
           return self.titleFunctions[$scope.view]($scope.currentDay);
         };
 
+        //used by the child forms
+        $scope.canDrillDownTo = function(view) {
+          if ($scope.drillDown === false) {
+            return false;
+          }
+          else if (canDrillTo(view)) {
+            return true;
+          }
+        };
+
         //Auto update the calendar when the locale changes
         var firstRunWatcher = true;
         var unbindWatcher = $scope.$watch(function() {
@@ -89,6 +103,17 @@ angular
           unbindDestroyListener();
           unbindWatcher();
         });
+
+        //private functions
+
+        var canDrillTo = function canDrillTo (view) {
+          if(view != $scope.drillDownTo) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        };
 
       }
     };

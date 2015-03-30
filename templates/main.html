@@ -12,6 +12,7 @@
     calendar-delete-event-html="deleteEventHtml"
     calendar-auto-open="autoOpen"
     calendar-timespan-click="timespanClick"
+    can-drill-down-to="canDrillDownTo('month')"
     ng-switch-when="year"
   ></mwl-calendar-year>
 
@@ -26,6 +27,7 @@
     calendar-auto-open="autoOpen"
     calendar-use-iso-week="useIsoWeek"
     calendar-timespan-click="timespanClick"
+    can-drill-down-to="canDrillDownTo('day')"
     ng-switch-when="month"
     ></mwl-calendar-month>
 
@@ -34,6 +36,7 @@
     calendar-current-day="currentDay"
     calendar-event-click="eventClick"
     calendar-use-iso-week="useIsoWeek"
+    can-drill-down-to="canDrillDownTo('day')"
     ng-switch-when="week"
     ></mwl-calendar-week>
 

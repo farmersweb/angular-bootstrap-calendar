@@ -19,7 +19,9 @@ angular
         }
 
         $scope.drillDown = function(day) {
-          $scope.calendarCtrl.changeView('day', moment($scope.currentDay).clone().date(day).toDate());
+          if( $scope.canDrillDownTo() ) {
+            $scope.calendarCtrl.changeView('day', moment($scope.currentDay).clone().date(day).toDate());
+          }
         };
 
         $scope.$watch('currentDay', updateView);

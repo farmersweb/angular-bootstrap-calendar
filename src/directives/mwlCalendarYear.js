@@ -57,7 +57,9 @@ angular
         };
 
         $scope.drillDown = function(month) {
-          $scope.calendarCtrl.changeView('month', moment($scope.currentDay).clone().month(month).toDate());
+          if( $scope.canDrillDownTo() ) {
+            $scope.calendarCtrl.changeView('month', moment($scope.currentDay).clone().date(month).toDate());
+          }
         };
       },
       link: function(scope, element, attrs, calendarCtrl) {

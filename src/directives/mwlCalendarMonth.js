@@ -17,7 +17,10 @@ angular
         deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek',
-        timespanClick: '=calendarTimespanClick'
+        timespanClick: '=calendarTimespanClick',
+        canDrillDownTo: "&",
+        monthStartDate: "=",
+        monthEndDate: "="
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
         var firstRun = false;
@@ -25,7 +28,12 @@ angular
         $scope.$sce = $sce;
 
         function updateView() {
-          $scope.view = calendarHelper.getMonthView($scope.events, $scope.currentDay, $scope.useIsoWeek);
+
+          $scope.view = calendarHelper.getMonthView( $scope.events, 
+                                                     $scope.currentDay, 
+                                                     $scope.useIsoWeek,
+                                                     $scope.monthStartDate,
+                                                     $scope.monthEndDate );
 
           //Auto open the calendar to the current day if set
           if ($scope.autoOpen && !firstRun) {
@@ -61,7 +69,9 @@ angular
         };
 
         $scope.drillDown = function(day) {
-          $scope.calendarCtrl.changeView('day', moment($scope.currentDay).clone().date(day).toDate());
+          if( $scope.canDrillDownTo() ) {
+            $scope.calendarCtrl.changeView('day', moment($scope.currentDay).clone().date(day).toDate());
+          }
         };
 
         $scope.highlightEvent = function(event, shouldAddClass) {
