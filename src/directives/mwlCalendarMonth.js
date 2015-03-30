@@ -20,7 +20,8 @@ angular
         timespanClick: '=calendarTimespanClick',
         canDrillDownTo: "&",
         monthStartDate: "=",
-        monthEndDate: "="
+        monthEndDate: "=",
+        monthDisplayEventCount: "="
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
         var firstRun = false;

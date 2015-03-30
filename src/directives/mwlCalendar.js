@@ -20,6 +20,7 @@ angular
         drillDownTo: "=calendarDrillDownTo",
         monthEndDate: "=calendarMonthEndDate",
         monthStartDate: "=calendarMonthStartDate",
+        monthDisplayEventCount: "=calendarMonthDisplayEventCount",
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek',
         eventLabel: '@calendarEventLabel',
@@ -58,6 +59,8 @@ angular
         };
 
         $scope.control = $scope.control || {};
+        $scope.monthDisplayEventCount = ( typeof $scope.monthDisplayEventCount !== "boolean" ) ? true :
+                                                                                                 $scope.monthDisplayEventCount;
 
         $scope.control.prev = function() {
           $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
