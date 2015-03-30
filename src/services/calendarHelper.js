@@ -25,9 +25,19 @@ angular.module('mwl.calendar')
       return isISOWeekBasedOnLocale();
     }
 
-    function getEventsInPeriod(calendarDate, period, allEvents) {
-      var startPeriod = moment(calendarDate).startOf(period);
-      var endPeriod = moment(calendarDate).endOf(period);
+    function getEventsInPeriod( dateOrStart, periodOrEnd, allEvents) {
+      var startPeriod,
+          endPeriod;
+
+      if( typeof periodOrEnd === "string" ) {
+        startPeriod = moment(dateOrStart).startOf(periodOrEnd);
+        endPeriod = moment(dateOrStart).endOf(periodOrEnd);
+      }
+      else {
+        startPeriod = dateOrStart;
+        endPeriod = periodOrEnd;
+      }
+
       return allEvents.filter(function(event) {
         return self.eventIsInPeriod(event.starts_at, event.ends_at, startPeriod, endPeriod);
       });
@@ -107,7 +117,15 @@ angular.module('mwl.calendar')
 
     this.getMonthView = function(events, currentDay, useISOWeek, startDate, endDate) {
 
-      var eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
+      var eventsInPeriod;
+
+      if( startDate && endDate ) {
+        eventsInPeriod = getEventsInPeriod( startDate, endDate, events );
+      }
+      else {
+        eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
+      }
+
 
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
 
