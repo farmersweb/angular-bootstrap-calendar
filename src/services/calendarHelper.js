@@ -111,10 +111,10 @@ angular.module('mwl.calendar')
 
       var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
 
-      var startOfMonth = startDate ? moment(startDate) : 
+      var startOfMonth = startDate ? moment(startDate) :
                                      moment(currentDay).startOf('month');
 
-      var numberOfDaysInMonth = endDate ? moment(endDate).diff( startOfMonth, "days" ): 
+      var numberOfDaysInMonth = endDate ? moment(endDate).diff( startOfMonth, "days" ) :
                                           moment(currentDay).endOf('month').date();
 
       var grid = [];

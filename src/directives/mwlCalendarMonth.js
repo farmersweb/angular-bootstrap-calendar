@@ -29,8 +29,8 @@ angular
 
         function updateView() {
 
-          $scope.view = calendarHelper.getMonthView( $scope.events, 
-                                                     $scope.currentDay, 
+          $scope.view = calendarHelper.getMonthView( $scope.events,
+                                                     $scope.currentDay,
                                                      $scope.useIsoWeek,
                                                      $scope.monthStartDate,
                                                      $scope.monthEndDate );

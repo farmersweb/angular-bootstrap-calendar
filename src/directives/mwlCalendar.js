@@ -34,7 +34,9 @@ angular
 
         var self = this;
 
-        var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}';
+        var weekTitleLabel = $scope.weekTitleLabel || 'Week {week} of {year}',
+            canDrillTo;
+
         this.titleFunctions = {
           day: function(currentDay) {
             return $filter('date')(currentDay, 'EEEE d MMMM, yyyy');
@@ -106,8 +108,8 @@ angular
 
         //private functions
 
-        var canDrillTo = function canDrillTo (view) {
-          if(view != $scope.drillDownTo) {
+        canDrillTo = function canDrillTo (view) {
+          if(view !== $scope.drillDownTo) {
             return true;
           }
           else {
