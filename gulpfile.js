@@ -3,6 +3,9 @@ var $ = require('gulp-load-plugins')();
 var streamqueue = require('streamqueue');
 var open = require('open');
 
+var jsAssetPath = "../spolsky/app/assets/javascripts/angular/vendor/";
+var cssAssetPath = "../spolsky/app/assets/stylesheets/vendor/";
+
 gulp.task('watch', ['server'], function() {
   $.livereload.listen();
   gulp.watch('src/less/*.less', ['less']);
@@ -13,8 +16,8 @@ gulp.task('watch', ['server'], function() {
     './docs/scripts/*.js',
     './docs/styles/*.css',
     './src/**/*.js',
-    './templates/**']
-  ).on('change', $.livereload.changed);
+    './templates/**'],
+    [ "js", "css" ] ).on('change', $.livereload.changed);
 });
 
 gulp.task('server', function() {
@@ -47,6 +50,7 @@ gulp.task('css', function() {
     .pipe($.less())
     .pipe($.rename('angular-bootstrap-calendar.css'))
     .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest( cssAssetPath ))
     .pipe($.minifyCss())
     .pipe($.rename('angular-bootstrap-calendar.min.css'))
     .pipe($.sourcemaps.write('.'))
@@ -91,6 +95,7 @@ function buildJS(withTemplates) {
     .pipe($.ngAnnotate())
     .pipe($.concat(unminfilename))
     .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest( jsAssetPath ))
     .pipe($.uglify())
     .pipe($.rename(minFilename))
     .pipe($.sourcemaps.write('.'))
