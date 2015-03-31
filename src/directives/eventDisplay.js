@@ -13,7 +13,12 @@ angular.
 
         if( linkedDirective ) {
 
+          //we remove our directive so as not to loop
           element.removeAttr( "mwl-event-display" );
+
+          //in link, ng-repeat will have already $compiled and provided
+          //us with all of our repeats. so we remove that too
+          element.removeAttr( "ng-repeat" );
 
           if( !element.attr( linkedDirective ) ) {
 
