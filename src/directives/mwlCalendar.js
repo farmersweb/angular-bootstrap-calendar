@@ -21,6 +21,7 @@ angular
         monthEndDate: "=calendarMonthEndDate",
         monthStartDate: "=calendarMonthStartDate",
         monthDisplayEventCount: "=calendarMonthDisplayEventCount",
+        monthEventDisplayDirective: "=calendarMonthEventDisplayDirective",
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek',
         eventLabel: '@calendarEventLabel',

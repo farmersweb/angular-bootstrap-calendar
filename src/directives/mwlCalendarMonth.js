@@ -21,7 +21,8 @@ angular
         canDrillDownTo: "&",
         monthStartDate: "=",
         monthEndDate: "=",
-        monthDisplayEventCount: "="
+        monthDisplayEventCount: "=",
+        monthEventDisplayDirective: "="
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
         var firstRun = false;
