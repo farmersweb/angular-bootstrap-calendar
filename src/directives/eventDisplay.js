@@ -25,9 +25,14 @@ angular.
             element.attr( linkedDirective, true );
 
             element.attr( "event", "event" );
-            element.attr( "event-click", "eventClick()" );
-            element.attr( "event-edit-click", "eventEditClick()" );
-            element.attr( "event-delete-click", "eventDeleteClick()" );
+
+            //here, "$target" refers to an optional target( this is most of the time
+            //the event in the ng-repeat loop ), $event is the actual click/focus/whatever
+            //event, so that the handler has the option to stop it
+
+            element.attr( "event-click", "eventClick( { $event: $event, $target: $target } )" );
+            element.attr( "event-edit-click", "eventEditClick( { $event: $event, $target: $target } )" );
+            element.attr( "event-delete-click", "eventDeleteClick( { $event: $event, $target: $target } )" );
             element.attr( "edit-event-html", "editEventHtml" );
             element.attr( "delete-event-html", "deleteEventHtml" );
 

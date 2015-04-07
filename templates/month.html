@@ -9,10 +9,10 @@
   <div ng-repeat="week in view track by $index">
     <div class="cal-row-fluid cal-before-eventlist">
       <div
-        class="cal-cell1 cal-cell {{ day.highlightClass }}"
+        class="cal-cell1 cal-cell"
         ng-repeat="day in week track by $index"
         ng-click="dayClicked($parent.$index, $index)"
-        ng-class="{pointer: day.events.length > 0}">
+        ng-class="{ pointer: day.events.length > 0, 'day-highlight': event.highlighted }">
         <div class="cal-month-day" ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday}">
           <small class="cal-events-num badge badge-important pull-left" 
                  ng-if="monthDisplayEventCount && day.events.length > 0">{{ day.events.length }}</small>

@@ -25,7 +25,9 @@ angular
         monthEventDisplayDirective: "="
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
-        var firstRun = false;
+        var firstRun = false,
+            highlightedDay,
+            skipUpdateThisDigest;
 
         $scope.$sce = $sce;
 
@@ -53,8 +55,14 @@ angular
 
         }
 
-        $scope.$watch('currentDay', updateView);
-        $scope.$watch('events', updateView, true);
+        $scope.$watch( 'currentDay', updateView );
+
+        $scope.$watch( 'events', function () {
+          if( !skipUpdateThisDigest ) {
+            updateView();
+          }
+          skipUpdateThisDigest = false;
+        } );
 
         $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
 
@@ -62,6 +70,8 @@ angular
 
           if (!dayClickedFirstRun) {
             $scope.timespanClick({$date: $scope.view[rowIndex][cellIndex].date.startOf('day').toDate()});
+            skipUpdateThisDigest = true;
+            updateView();
           }
 
           var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
@@ -76,34 +86,18 @@ angular
           }
         };
 
-        $scope.highlightEvent = function(event, shouldAddClass) {
+        $scope.highlightEvent = function( $event ) {
 
-          $scope.view = $scope.view.map(function(week) {
+          if( highlightedDay ) {
+            highlightedDay.highlighted = false;
+          }
 
-            week.isOpened = false;
-
-            return week.map(function(day) {
-
-              delete day.highlightClass;
-              day.isOpened = false;
-
-              if (shouldAddClass) {
-                var dayContainsEvent = day.events.filter(function(e) {
-                    return e.$id === event.$id;
-                  }).length > 0;
-
-                if (dayContainsEvent) {
-                  day.highlightClass = 'day-highlight dh-event-' + event.type;
-                }
-              }
-
-              return day;
-
-            });
-
-          });
+          skipUpdateThisDigest = true;
+          $event.highlighted = true;
+          highlightedDay = $event;
 
         };
+
       },
       link: function(scope, element, attrs, calendarCtrl) {
         scope.calendarCtrl = calendarCtrl;
