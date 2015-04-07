@@ -15,9 +15,6 @@
 .cal-month-day {
   height: @rowHeightMonth;
 }
-[class*="cal-cell"]:hover, .cell-focus {
-  background-color: @dayHover;
-}
 .cal-year-box [class*="span"],
 .cal-month-box [class*="cal-cell"] {
   min-height: @rowHeightMonth;
@@ -91,6 +88,18 @@ span[data-cal-date]:hover {
 
 .cal-day-weekend span[data-cal-date] {
   color: darkred;
+}
+
+.cal-day-enabled {
+  cursor: pointer;
+}
+
+[class*="cal-cell"] .cal-day-enabled:hover, .cell-focus {
+  background-color: @dayHover;
+}
+
+.cal-day-enabled span[data-cal-date] {
+  color: darkgreen;
 }
 
 #cal-week-box {

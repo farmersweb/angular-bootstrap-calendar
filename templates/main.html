@@ -28,7 +28,9 @@
     calendar-use-iso-week="useIsoWeek"
     calendar-timespan-click="timespanClick"
     can-drill-down-to="canDrillDownTo('day')"
-    month-start-date="monthStartDate"
+    date-filter="dateFilter( { '$dayOfWeek': $dayOfWeek, '$day': $day } )"
+    month-day-is-weekend="monthDayIsWeekend( { '$dayOfWeek': $dayOfWeek, '$day': $day } )"
+    month-start-date="monthStartDate"h
     month-end-date="monthEndDate"
     month-display-event-count="monthDisplayEventCount"
     month-event-display-directive="monthEventDisplayDirective"

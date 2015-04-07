@@ -19,6 +19,8 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick',
         canDrillDownTo: "&",
+        dateFilter: "&",
+        monthDayIsWeekend: "&",
         monthStartDate: "=",
         monthEndDate: "=",
         monthDisplayEventCount: "=",
@@ -27,7 +29,10 @@ angular
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
         var firstRun = false,
             highlightedDay,
-            skipUpdateThisDigest;
+            skipUpdateThisDigest,
+            //private functions
+            isWeekend,
+            dayEnabled;
 
         $scope.$sce = $sce;
 
@@ -52,7 +57,6 @@ angular
               });
             });
           }
-
         }
 
         $scope.$watch( 'currentDay', updateView );
@@ -65,6 +69,14 @@ angular
         } );
 
         $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
+
+        $scope.dayClasses = function dayClasses( day, dayOfWeek ) {
+          return {'cal-day-outmonth': !day.inMonth,
+                  'cal-day-inmonth': day.inMonth,
+                  'cal-day-weekend': isWeekend( day, dayOfWeek ),
+                  'cal-day-enabled': dayEnabled( day, dayOfWeek ),
+                  'cal-day-today': day.isToday };
+        };
 
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
 
@@ -96,6 +108,24 @@ angular
           $event.highlighted = true;
           highlightedDay = $event;
 
+        };
+
+        isWeekend = function ( day, dayOfWeek ) {
+          var result = $scope.monthDayIsWeekend( { "$dayOfWeek": dayOfWeek,
+                                                   "$day": day } );
+          if( typeof result !== "undefined" ) {
+            return result;
+          }
+          return dayOfWeek === 5 || dayOfWeek === 6;
+        };
+
+        dayEnabled = function ( day, dayOfWeek ) {
+          var result = $scope.dateFilter( { "$dayOfWeek": dayOfWeek,
+                                            "$day": day } );
+          if( typeof result !== "undefined" ) {
+            return result;
+          }
+          return true;
         };
 
       },
