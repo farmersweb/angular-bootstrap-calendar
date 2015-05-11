@@ -98,7 +98,7 @@ angular
             updateView();
           }
 
-          if ( !$scope.editEvent ) {
+          if ( !$scope.editEvents ) {
             return;
           }
 
