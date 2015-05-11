@@ -14,6 +14,7 @@ angular
         eventClick: '&calendarEventClick',
         eventEditClick: '&calendarEditEventClick',
         eventDeleteClick: '&calendarDeleteEventClick',
+        editEvents: "=editEvents",
         editEventHtml: '=calendarEditEventHtml',
         deleteEventHtml: '=calendarDeleteEventHtml',
         drillDown: '=calendarDrillDown',

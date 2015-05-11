@@ -16,22 +16,13 @@
         <div class="cal-month-day" ng-class="dayClasses( day, $index )">
           <small class="cal-events-num badge badge-important pull-left" 
                  ng-if="monthDisplayEventCount && day.events.length > 0">{{ day.events.length }}</small>
-          <span class="pull-right" data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
+
+          <span data-cal-date ng-click="drillDown(day.label)">{{ day.label }}</span>
+
           <div class="cal-day-tick" ng-show="day.isOpened">
-            <i class="glyphicon glyphicon-chevron-up"></i>
-            <i class="fa fa-chevron-up"></i>
           </div>
+
           <div class="events-list" ng-show="day.events.length > 0">
-            <a
-              href="javascript:;"
-              ng-click="eventClick({$event: event})"
-              ng-repeat="event in day.events track by $index"
-              class="ss-icon icon pull-left event event-{{ event.type }}"
-              ng-mouseenter="highlightEvent(event, true)"
-              ng-mouseleave="highlightEvent(event, false)"
-              tooltip-append-to-body="true"
-              tooltip="{{ event.title }}"
-              >&#xE500; {{ event.amount }}</a>
           </div>
 
         </div>

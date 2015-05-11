@@ -10,6 +10,7 @@ angular
       scope: {
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
+        editEvents: "=editEvents",
         eventClick: '=calendarEventClick',
         eventEditClick: '=calendarEditEventClick',
         eventDeleteClick: '=calendarDeleteEventClick',
@@ -32,7 +33,8 @@ angular
             skipUpdateThisDigest,
             //private functions
             isWeekend,
-            dayEnabled;
+            dayEnabled,
+            dayHasEvents;
 
         $scope.$sce = $sce;
 
@@ -57,6 +59,7 @@ angular
               });
             });
           }
+
         }
 
         $scope.$watch( 'currentDay', updateView );
@@ -68,14 +71,23 @@ angular
           skipUpdateThisDigest = false;
         } );
 
-        $scope.weekDays = calendarHelper.getWeekDayNames(false, $scope.useIsoWeek);
+        $scope.weekDays = calendarHelper.getWeekDayNames(true, $scope.useIsoWeek);
 
         $scope.dayClasses = function dayClasses( day, dayOfWeek ) {
           return {'cal-day-outmonth': !day.inMonth,
                   'cal-day-inmonth': day.inMonth,
                   'cal-day-weekend': isWeekend( day, dayOfWeek ),
                   'cal-day-enabled': dayEnabled( day, dayOfWeek ),
-                  'cal-day-today': day.isToday };
+                  'cal-day-today': day.isToday,
+                  'cal-day-has-events': dayHasEvents(day) };
+        };
+
+        dayHasEvents = function(day) {
+          if (day.events.length > 0) {
+            return true;
+          } else {
+            return false;
+          }
         };
 
         $scope.dayClicked = function(rowIndex, cellIndex, dayClickedFirstRun) {
@@ -86,9 +98,14 @@ angular
             updateView();
           }
 
+          if ( !$scope.editEvent ) {
+            return;
+          }
+
           var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
           $scope.view = handler.view;
           $scope.openEvents = handler.openEvents;
+
 
         };
 
