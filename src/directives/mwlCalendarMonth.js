@@ -64,12 +64,17 @@ angular
 
         $scope.$watch( 'currentDay', updateView );
 
-        $scope.$watch( 'events', function () {
-          if( !skipUpdateThisDigest ) {
-            updateView();
+        $scope.$watch(
+          function () {
+            return $scope.events.length;
+          },
+          function () {
+            if( !skipUpdateThisDigest ) {
+              updateView();
+            }
+            skipUpdateThisDigest = false;
           }
-          skipUpdateThisDigest = false;
-        } );
+        );
 
         $scope.weekDays = calendarHelper.getWeekDayNames(true, $scope.useIsoWeek);
 

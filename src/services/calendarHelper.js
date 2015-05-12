@@ -77,11 +77,23 @@ angular.module('mwl.calendar')
       periodStart = moment(periodStart);
       periodEnd = moment(periodEnd);
 
+      // i think this is cleaner than what is below
+
+      var startInRange = ( eventStart.isBetween( periodStart, periodEnd ) ||
+                           eventStart.isSame( periodStart ) );
+
+      var endInRange = ( eventEnd.isBetween( periodStart, periodEnd ) ||
+                         eventEnd.isSame( periodEnd ) );
+
+      return startInRange || endInRange;
+
+      /**
       return (eventStart.isAfter(periodStart) && eventStart.isBefore(periodEnd)) ||
         (eventEnd.isAfter(periodStart) && eventEnd.isBefore(periodEnd)) ||
         (eventStart.isBefore(periodStart) && eventEnd.isAfter(periodEnd)) ||
         eventStart.isSame(periodStart) ||
         eventEnd.isSame(periodEnd);
+        **/
 
     };
 
@@ -120,7 +132,9 @@ angular.module('mwl.calendar')
       var eventsInPeriod;
 
       if( startDate && endDate ) {
-        eventsInPeriod = getEventsInPeriod( startDate, endDate, events );
+        eventsInPeriod = getEventsInPeriod( moment( startDate ).startOf( "day" ),
+                                            moment( endDate ).endOf( "day" ),
+                                            events );
       }
       else {
         eventsInPeriod = getEventsInPeriod(currentDay, 'month', events);
@@ -173,7 +187,10 @@ angular.module('mwl.calendar')
           isToday: moment().startOf('day').isSame(startOfMonth),
           date: startOfMonth.clone(),
           events: eventsWithIds.filter(function(event) {
-            return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
+            return self.eventIsInPeriod( event.starts_at,
+                                         event.ends_at,
+                                         startOfMonth.clone().startOf('day'),
+                                         startOfMonth.clone().endOf('day') );
           })
         };
 
