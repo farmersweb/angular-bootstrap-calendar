@@ -28,6 +28,7 @@ angular
         monthEventDisplayDirective: "="
       },
       controller: function($scope, $sce, $timeout, moment, calendarHelper) {
+
         var firstRun = false,
             highlightedDay,
             skipUpdateThisDigest,
@@ -107,10 +108,11 @@ angular
             return;
           }
 
-          var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex);
-          $scope.view = handler.view;
-          $scope.openEvents = handler.openEvents;
-
+          if( dayEnabled( $scope.view[rowIndex][cellIndex] ) ) {
+            var handler = calendarHelper.toggleEventBreakdown($scope.view, rowIndex, cellIndex, dayEnabled);
+            $scope.view = handler.view;
+            $scope.openEvents = handler.openEvents;
+          }
 
         };
 
